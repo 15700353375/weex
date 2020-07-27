@@ -45,9 +45,6 @@ export default {
     focus () {
       this.$refs.shopId.focus()
     },
-    // keyboard (e) {
-    //   this.count++
-    // },
     inputPhone (event) {
       this.phone = event.value
     },

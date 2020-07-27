@@ -2,8 +2,6 @@
   <div class="wrapper">
     <Home />
     <!-- <Login /> -->
-    <!-- <settleAccounts/> -->
-    <!-- <memberSettleAccounts/> -->
 
   </div>
 </template>
@@ -16,8 +14,6 @@
 import HelloWorld from '@/components/HelloWorld'
 import Home from '@/view/home'
 // import Login from '@/view/login'
-import settleAccounts from '@/view/settleAccounts'
-import memberSettleAccounts from '@/view/memberSettleAccounts'
 // var navigator = weex.requireModule('navigator')
 // let utils = require('./appUtils')
 export default {
@@ -25,9 +21,7 @@ export default {
   components: {
     Home,
     // Login,
-    HelloWorld,
-    settleAccounts,
-    memberSettleAccounts
+    HelloWorld
   },
   data () {
     return {
