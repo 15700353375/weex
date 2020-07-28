@@ -5,7 +5,7 @@
 <template>
   <div class="home">
     <div class="top-main">
-      <div class="item">
+      <div class="item" @click="handleClick">
         <text class="icon-shezhi iconfont">&#xe7e8;</text>
         <text class="item-info">办卡</text>
       </div>
@@ -19,9 +19,7 @@
       </div>
     </div>
     <scroller class="scroller">
-      <!-- <div>11111111111111{{baseURL}}</div> -->
       <div class="content-main">
-
         <div class="content-item" v-for="(item,index) in list" :key="index">
           <div class="item-top" :style="{'background-color':`${dataColors[item.id]}`}">
             <text class="item-title">{{item.tit}}</text>
@@ -34,7 +32,7 @@
     </scroller>
     <div class="btn-box">
       <div class="btn" @click="goPage">
-        <text class="btn-text" @click="goPage">刷新一下</text>
+        <text class="btn-text">刷新一下</text>
       </div>
     </div>
 
@@ -43,12 +41,18 @@
 
 <script>
 var navigator = weex.requireModule('navigator')
-let utils = require('../appUtils')
+// let utils = require('../appUtils')
+const modal = weex.requireModule('modal')
+const toast = message => {
+  modal.toast({
+    message,
+    duration: 9
+  })
+}
 export default {
   data () {
     return {
       phone: '',
-      count: 1,
       baseURL: '',
       // 颜色库
       dataColors: ['#59b7ff', '#aae6aa', '#e5ed9a', '#ffa88c', '#f2b2fe', '#a4b8ff', '#59fffd', '#ffca59', '#ff5959',
@@ -246,14 +250,27 @@ export default {
       this.phone = event.value
     },
 
-    goPage () {
-      // this.baseURL = utils.getUrl('login')
+    handleClick (e) {
+      this.count++
+      toast(e.timestamp + weex.config.bundleUrl.split('/').slice(0, -1).join('/') + '/login.js')
       navigator.push({
-        url: utils.getUrl('login'),
+        // url: utils.getUrl('login'),
+        url: weex.config.bundleUrl.split('/').slice(0, -1).join('/') + '/login.js',
         animated: 'true'
       }, event => {
         console.log('callback: ', event)
       })
+    },
+
+    goPage () {
+      // this.baseURL = utils.getUrl('login')
+      // navigator.push({
+      //   url: utils.getUrl('login'),
+      //   animated: 'true'
+      // }, event => {
+      //   console.log('callback: ', event)
+      // })
+      this.$emit('closeHome')
     }
   }
 }

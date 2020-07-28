@@ -7,7 +7,10 @@ exports.getUrl = function (url) {
 
   let nativeBase
   if (platform === 'android') {
-    nativeBase = 'file://assets/' + `/${url}.js`
+    nativeBase = 'local://assets/' + `/${url}.js`
+    // nativeBase = 'local://assets/dist/';
+    nativeBase = 'local://' + 'file://assets/'
+    nativeBase = nativeBase + url + '.js'
 
     // nativeBase =
     //   bundleUrl

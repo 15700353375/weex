@@ -1,8 +1,8 @@
 <template>
   <div class="wrapper">
-    <Home />
-    <!-- <Login /> -->
-    <!-- <settleAccounts/> -->
+    <Home v-if='comp.home' @closeHome='closeHome' />
+    <Login v-if='comp.login' @closeLogin='closeLogin' />
+    <settleAccounts v-if='comp.settleAccounts' />
     <!-- <memberSettleAccounts/> -->
 
   </div>
@@ -15,7 +15,7 @@
 <script>
 import HelloWorld from '@/components/HelloWorld'
 import Home from '@/view/home'
-// import Login from '@/view/login'
+import Login from '@/view/login'
 import settleAccounts from '@/view/settleAccounts'
 import memberSettleAccounts from '@/view/memberSettleAccounts'
 // var navigator = weex.requireModule('navigator')
@@ -24,16 +24,25 @@ export default {
   name: 'App',
   components: {
     Home,
-    // Login,
+    Login,
     HelloWorld,
     settleAccounts,
     memberSettleAccounts
   },
   data () {
     return {
+      comp: {
+        login: true,
+        home: false,
+        settleAccounts: false
+      }
     }
   },
   created () {
+    this.comp.forEach(item => {
+      console.log(item)
+    })
+
     // 添加 字体图标
     const domModule = weex.requireModule('dom')
     let platform = weex.config.env.platform.toLowerCase()
@@ -57,6 +66,18 @@ export default {
 
   },
   methods: {
+    closeLogin () {
+      for (let i in this.comp) {
+        this.comp[i] = false
+      }
+      this.comp.home = true
+    },
+    closeHome () {
+      for (let i in this.comp) {
+        this.comp[i] = false
+      }
+      this.comp.settleAccounts = true
+    }
   }
 }
 </script>
