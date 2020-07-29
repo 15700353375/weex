@@ -20,7 +20,7 @@
     </div>
     <scroller class="scroller">
       <div class="content-main">
-        <div class="content-item" v-for="(item,index) in list" :key="index">
+        <div class="content-item" v-for="(item,index) in list" :key="index" @click="goHome">
           <div class="item-top" :style="{'background-color':`${dataColors[item.id]}`}">
             <text class="item-title">{{item.tit}}</text>
           </div>
@@ -50,6 +50,7 @@ const toast = message => {
   })
 }
 export default {
+  name: 'home',
   data () {
     return {
       phone: '',
@@ -233,7 +234,6 @@ export default {
     //   nativeBase = 'http://' + host + '/index.html?page=./dist/'
     // }
     // this.baseURL = nativeBase
-    // debugger
   },
   mounted () {
     // 自动获取焦点
@@ -261,6 +261,9 @@ export default {
         console.log('callback: ', event)
       })
     },
+    goHome () {
+      this.$emit('closeComp', 'settleAccounts')
+    },
 
     goPage () {
       // this.baseURL = utils.getUrl('login')
@@ -270,14 +273,14 @@ export default {
       // }, event => {
       //   console.log('callback: ', event)
       // })
-      this.$emit('closeHome')
+      this.$emit('closeComp', 'settleAccounts')
     }
   }
 }
 
 </script>
 
-<style>
+<style scoped>
 .iconfont {
   font-family: iconfont5;
 }

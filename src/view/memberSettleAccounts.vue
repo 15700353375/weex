@@ -78,6 +78,7 @@ const toast = message => {
   })
 }
 export default {
+  name: 'memberSettleAccounts',
   data () {
     return {
       items: ['二维码', '会员卡', '现金'],
@@ -142,7 +143,7 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
 .iconfont {
   font-family: iconfont5;
 }

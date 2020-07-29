@@ -29,6 +29,7 @@
 // var navigator = weex.requireModule('navigator')
 // let utils = require('../appUtils')
 export default {
+  name: 'login',
   data () {
     return {
       shopId: '',
@@ -57,7 +58,7 @@ export default {
 
     goPage () {
       console.log('登录了')
-      this.$emit('closeLogin')
+      this.$emit('closeComp', 'home')
       // navigator.push({
       //   url: utils.getUrl('index'),
       //   // url: this.urls,
@@ -70,7 +71,7 @@ export default {
 }
 
 </script>
-<style>
+<style scoped>
 .login{
   width: 750px;
   height: 1280px;

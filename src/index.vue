@@ -1,9 +1,9 @@
 <template>
   <div class="wrapper">
-    <Home v-if='comp.home' @closeHome='closeHome' />
-    <Login v-if='comp.login' @closeLogin='closeLogin' />
-    <settleAccounts v-if='comp.settleAccounts' />
-    <memberSettleAccounts v-if='comp.memberSettleAccounts' />
+    <Home v-if='comp.home' @closeComp='closeComp($event)' />
+    <Login v-if='comp.login' @closeComp='closeComp($event)' />
+    <settleAccounts v-if='comp.settleAccounts' @closeComp='closeComp($event)' />
+    <memberSettleAccounts v-if='comp.memberSettleAccounts' @closeComp='closeComp($event)' />
 
   </div>
 </template>
@@ -32,10 +32,10 @@ export default {
   data () {
     return {
       comp: {
-        login: false,
+        login: true,
         home: false,
         settleAccounts: false,
-        memberSettleAccounts: true
+        memberSettleAccounts: false
       }
     }
   },
@@ -63,17 +63,11 @@ export default {
 
   },
   methods: {
-    closeLogin () {
+    closeComp (event) {
       for (let i in this.comp) {
         this.comp[i] = false
       }
-      this.comp.home = true
-    },
-    closeHome () {
-      for (let i in this.comp) {
-        this.comp[i] = false
-      }
-      this.comp.settleAccounts = true
+      this.comp[event] = true
     }
   }
 }

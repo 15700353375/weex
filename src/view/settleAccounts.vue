@@ -64,15 +64,10 @@
 
 <script>
 export default {
+  name: 'settleAccounts',
   data () {
     return {
-      phone: '',
-      count: 1,
-      baseURL: '',
-      // 颜色库
-      dataColors: ['#59b7ff', '#aae6aa', '#e5ed9a', '#ffa88c', '#f2b2fe', '#a4b8ff', '#59fffd', '#ffca59', '#ff5959',
-        '#a8b5c8'
-      ],
+
       list: [
         {
           id: 1,
@@ -249,25 +244,19 @@ export default {
 
   },
   mounted () {
-    // 自动获取焦点
-    this.focus()
+
   },
   methods: {
-    focus () {
-      // this.$refs.aaaa.focus()
-    },
-    keyboard (e) {
-      this.count++
-    },
-    inputPhone (event) {
-      this.phone = event.value
+
+    goPage (event) {
+      this.$emit('closeComp', 'memberSettleAccounts')
     }
   }
 }
 
 </script>
 
-<style>
+<style scoped>
 .iconfont {
   font-family: iconfont5;
 }
