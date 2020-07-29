@@ -3,7 +3,7 @@
     <Home v-if='comp.home' @closeHome='closeHome' />
     <Login v-if='comp.login' @closeLogin='closeLogin' />
     <settleAccounts v-if='comp.settleAccounts' />
-    <!-- <memberSettleAccounts/> -->
+    <memberSettleAccounts v-if='comp.memberSettleAccounts' />
 
   </div>
 </template>
@@ -32,17 +32,14 @@ export default {
   data () {
     return {
       comp: {
-        login: true,
+        login: false,
         home: false,
-        settleAccounts: false
+        settleAccounts: false,
+        memberSettleAccounts: true
       }
     }
   },
   created () {
-    this.comp.forEach(item => {
-      console.log(item)
-    })
-
     // 添加 字体图标
     const domModule = weex.requireModule('dom')
     let platform = weex.config.env.platform.toLowerCase()
@@ -55,7 +52,7 @@ export default {
       // todo 理论上同android未测试
       url = "url('local:///iconfont.ttf')"
     } else {
-      url = "url('http://at.alicdn.com/t/font_1961005_wa1cxosi4z.ttf')"
+      url = "url('http://at.alicdn.com/t/font_1961005_lgtkvrkjdm.ttf')"
     }
     domModule.addRule('fontFace', {
       'fontFamily': 'iconfont5',

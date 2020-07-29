@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "2780803",
+      "name": "加",
+      "font_class": "jia",
+      "unicode": "e628",
+      "unicode_decimal": 58920
+    },
+    {
+      "icon_id": "2907650",
+      "name": "删除筛选项",
+      "font_class": "delete",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
       "icon_id": "13481110",
       "name": "充值",
       "font_class": "3",

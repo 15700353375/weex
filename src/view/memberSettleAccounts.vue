@@ -28,45 +28,36 @@
             <text class="total-right">元</text>
           </div>
         </div>
+
         <div class="total-item">
           <text class="total-left">结账方式：</text>
-          <!-- <div class="total-cell-right">
-            <text class="total-center">800</text>
-            <text class="total-right">元</text>
-          </div> -->
         </div>
         <div class="settle">
-          <div class="total-item-settle">
-            <text class="settle-left">会员卡</text>
+          <div class="total-item-settle" v-for="(item,index) in list" :key="item.type">
+            <text class="settle-left">{{item.name}}</text>
             <div class="total-cell-right">
-              <text class="settle-center">100</text>
+              <input class="settle-center" type="number" :value="item.money" @input="inputMoney(index)" ref="money">
               <text class="settle-right">元</text>
-            </div>
-          </div>
-          <div class="total-item-settle">
-            <text class="settle-left">银行卡</text>
-            <div class="total-cell-right">
-              <text class="settle-center">100</text>
-              <text class="settle-right">元</text>
-            </div>
-          </div>
-          <div class="total-item-settle">
-            <text class="settle-left">现金</text>
-            <div class="total-cell-right">
-              <text class="settle-center">100</text>
-              <text class="settle-right">元</text>
+              <text class="iconfont icon-delete settle-del" @click="del(index)">&#xe601;</text>
             </div>
           </div>
         </div>
+        <div class="settle-add-box">
+          <div class="settle-add" @click="add">
+            <text class="iconfont icon-jia settle-add-icon">&#xe628;</text>
+            <text class="settle-add-info">添加结账方式</text>
+          </div>
+        </div>
+
       </div>
     </div>
     <div class="btn-box">
 
       <div class="btn-bottom">
-        <div class="btn" @click="goPage">
+        <div class="btn" >
           <text class="btn-text">取消</text>
         </div>
-        <div class="btn2" @click="goPage">
+        <div class="btn2" @click="next">
           <text class="btn-text2">下一步</text>
         </div>
       </div>
@@ -78,32 +69,66 @@
 <script>
 var navigator = weex.requireModule('navigator')
 let utils = require('../appUtils')
+const picker = weex.requireModule('picker')
+const modal = weex.requireModule('modal')
+const toast = message => {
+  modal.toast({
+    message,
+    duration: 3
+  })
+}
 export default {
   data () {
     return {
-      phone: '',
-      count: 1,
-      baseURL: ''
+      items: ['二维码', '会员卡', '现金'],
+      list: [
+        {
+          type: 1,
+          name: '会员卡',
+          money: 100
+        }
+      ]
     }
   },
   created () {
 
   },
   mounted () {
-    // 自动获取焦点
-    this.focus()
   },
   methods: {
-    focus () {
-      // this.$refs.aaaa.focus()
+    inputMoney (event, index) {
+      this.list[index].money = event.value
     },
-    keyboard (e) {
-      this.count++
+    del (index) {
+      this.list.splice(index, 1)
     },
-    inputPhone (event) {
-      this.phone = event.value
+    add () {
+      let that = this
+      picker.pick({
+        confirmTitle: '确定',
+        cancelTitle: '取消',
+        items: that.items,
+        height: '500px'
+      }, function (ret) {
+        var result = ret.result
+        // eslint-disable-next-line eqeqeq
+        if (result == 'success') {
+          let index = that.list.findIndex((o) => { return o.type === ret.data })
+
+          if (index > -1) {
+            toast('这种结账方式已存在')
+          } else {
+            that.list.push({
+              type: ret.data,
+              name: that.items[ret.data],
+              money: 0
+            })
+          }
+        }
+      })
     },
-    goPage () {
+    // 下一步
+    next () {
       navigator.push({
         url: utils.getUrl('login'),
         // url: this.urls,
@@ -179,7 +204,7 @@ export default {
 
 .total-box{
   width: 750px;
-  height: 300px;
+  /* height: 300px; */
 }
 .total-item{
   width: 750px;
@@ -210,7 +235,7 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  padding-right: 60px;
+  padding-right: 40px;
 }
 .total-center{
   font-size: 60px;
@@ -268,7 +293,6 @@ export default {
 
 .settle{
   width: 750px;
-  height: auto;
   background-color: #f1f1f1;
 }
 .total-item-settle{
@@ -291,15 +315,62 @@ export default {
 }
 
 .settle-center{
+  width: 200px;
+  height: 80px;
   font-size: 50px;
   color: #2d8cf0;
-  line-height: 100px;
+  line-height: 80px;
   align-items: center;
+  margin-top: 10px;
+  background-color: #f1f1f1;
+  border-width: 2px;
+  border-color: #aaa;
+  border-style: solid;
+  border-radius: 10px;
+  padding: 6px;
 }
 .settle-right{
   font-size: 30px;
   color: #333;
   line-height: 100px;
   align-items: center;
+}
+.settle-del{
+  width: 90px;
+  font-size: 50px;
+  color: #666;
+  line-height: 100px;
+  align-items: center;
+  justify-content: flex-end;
+  text-align: right;
+}
+.settle-add-box{
+  width: 750px;
+  height: 100px;
+  align-items: center;
+  margin-top: 30px;
+}
+.settle-add{
+  width: 500px;
+  height: 100px;
+  border-width: 2px;
+  border-color: #2d8cf0;
+  border-style: solid;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+}
+.settle-add-icon{
+  font-size: 40px;
+  color:#2d8cf0 ;
+  margin-right: 20px;
+  line-height: 100px;
+}
+.settle-add-info{
+  font-size: 40px;
+  color: #409eff;
+  line-height: 100px;
 }
 </style>

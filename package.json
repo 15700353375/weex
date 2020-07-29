@@ -36,6 +36,7 @@
     "weex-vue-render": "^1.0.17"
   },
   "devDependencies": {
+    "@weex-project/weex-picker": "^0.2.4",
     "autoprefixer": "^8.0.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.1",
